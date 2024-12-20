@@ -4,8 +4,8 @@
 # Ellsp
 > Elisp Language Server
 
-[![CI Elisp](https://github.com/jcs-elpa/ellsp/actions/workflows/test-elisp.yml/badge.svg)](https://github.com/jcs-elpa/ellsp/actions/workflows/test-elisp.yml)
-[![CI VSCode](https://github.com/jcs-elpa/ellsp/actions/workflows/test-vscode.yml/badge.svg)](https://github.com/jcs-elpa/ellsp/actions/workflows/test-vscode.yml)
+[![CI Elisp](https://github.com/elisp-lsp/ellsp/actions/workflows/test-elisp.yml/badge.svg)](https://github.com/elisp-lsp/ellsp/actions/workflows/test-elisp.yml)
+[![CI VSCode](https://github.com/elisp-lsp/ellsp/actions/workflows/test-vscode.yml/badge.svg)](https://github.com/elisp-lsp/ellsp/actions/workflows/test-vscode.yml)
 
 This software is designed to be used with editors other than Emacs. If you are
 an Emacs user already, I prefer you use Emacs directly.
