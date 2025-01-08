@@ -1,6 +1,6 @@
 @echo off
 
-:: Copyright (C) 2023 the Ellsp authors.
+:: Copyright (C) 2023-2025 the Ellsp authors.
 
 :: This program is free software; you can redistribute it and/or modify
 :: it under the terms of the GNU General Public License as published by
@@ -17,4 +17,4 @@
 
 setlocal
 
-curl -fsSL https://github.com/jcs-elpa/ellsp/releases/download/0.0.0/ellsp-win.exe -o %~dp0ellsp-win.exe
+curl -fsSL https://github.com/elisp-lsp/ellsp/releases/latest/download/ellsp-win.exe -o %~dp0ellsp-win.exe

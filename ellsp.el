@@ -48,7 +48,7 @@
   "Elisp Language Server."
   :prefix "ellsp-"
   :group 'tool
-  :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/ellsp"))
+  :link '(url-link :tag "Repository" "https://github.com/elisp-lsp/ellsp"))
 
 ;; XXX: Don't know why \r\n won't work with VSCode; and don't
 ;; know why \n will work. :/
