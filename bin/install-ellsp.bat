@@ -15,6 +15,21 @@
 :: You should have received a copy of the GNU General Public License
 :: along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-setlocal
+::: Commentary:
+::
+:: TODO(everyone): Keep this script simple and easily auditable.
+::
 
-curl -fsSL https://github.com/elisp-lsp/ellsp/releases/latest/download/ellsp-win.exe -o %~dp0ellsp-win.exe
+set URL=https://github.com/elisp-lsp/ellsp/releases/latest/download/ellsp_win-x64.zip
+set ELLSP_BIN_DIR=%~dp0
+set ZIP=%ELLSP_BIN_DIR%\ellsp.zip
+
+curl.exe -fsSL %URL% -o %ZIP%
+
+tar.exe -xf %ZIP% -C %ELLSP_BIN_DIR%
+
+del %ZIP%
+
+echo.
+echo ✓ Ellsp is installed in %ELLSP_BIN_DIR%.
+echo.

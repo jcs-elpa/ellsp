@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Copyright (C) 2023-2025 the Ellsp authors.
 
@@ -15,17 +15,54 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+## Commentary:
+#
+# TODO(everyone): Keep this script simple and easily auditable.
+#
+
+set -e
+
+if ! command -v unzip >/dev/null; then
+  echo "Error: unzip is required to install Ellsp." 1>&2
+  exit 1
+fi
+
 if [ "$OS" = "Windows_NT" ]; then
-  target="ellsp-win.exe"
+  ext="zip"
+else
+  ext="tar.gz"
+fi
+
+if [ "$OS" = "Windows_NT" ]; then
+  target="win-x64"
 else
   case $(uname -sm) in
-    "Darwin x86_64") target="ellsp-macos" ;;
-    "Darwin arm64") target="ellsp-macos" ;;
-    "Linux aarch64") target="ellsp-linux" ;;
-    *) target="ellsp-linux" ;;
+    "Darwin x86_64") target="macos-x64" ;;
+    "Darwin arm64") target="macos-arm64" ;;
+    "Linux aarch64") target="linux-arm64" ;;
+    *) target="linux-x64" ;;
   esac
 fi
 
+ellsp_uri="https://github.com/elisp-lsp/ellsp/releases/latest/download/ellsp_${target}.${ext}"
+
 SDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-curl -fsSL https://github.com/elisp-lsp/ellsp/releases/latest/download/${target} -o ${SDIR}/${target}
+ellsp_bin_dir=${SDIR}
+dwd_file=$ellsp_bin_dir/ellsp.${ext}
+
+mkdir -p $ellsp_bin_dir
+
+curl -fsSL $ellsp_uri -o $dwd_file
+
+if [ "$OS" = "Windows_NT" ]; then
+  unzip -d "$ellsp_bin_dir" -o "$dwd_file"
+else
+  tar -xvzf "$dwd_file" -C "$ellsp_bin_dir"
+fi
+
+rm $dwd_file
+
+echo
+echo "✓ Ellsp is installed in ${ellsp_bin_dir}."
+echo
