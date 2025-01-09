@@ -1,4 +1,5 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Release](https://img.shields.io/github/tag/elisp-lsp/ellsp.svg?label=release&logo=github)](https://github.com/elisp-lsp/ellsp/releases/latest)
 [![JCS-ELPA](https://raw.githubusercontent.com/jcs-emacs/badges/master/elpa/v/ellsp.svg)](https://jcs-emacs.github.io/jcs-elpa/#/ellsp)
 
 # Ellsp
