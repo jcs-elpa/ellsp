@@ -1,0 +1,93 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '**.yml'
+      - proxy/**
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERSION: 0.1.0
+  REPO_BIN: 'elisp-lsp/binaries'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+        - linux-arm64
+        - linux-x64
+        - macos-arm64
+        - macos-x64
+        - win-arm64
+        - win-x64
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install --assume-yes qemu-user-binfmt
+
+    - uses: MOZGIII/install-ldid-action@master
+      with:
+        tag: v2.1.5-procursus7
+
+    - name: Preparing...
+      run: npm install --include=dev
+
+    - name: Building...
+      run: npm run-script pkg-${{ matrix.target }}
+
+    - name: Prepare content...
+      run: |
+        mv lisp dist
+        mv COPYING dist
+        mv README.md dist
+
+    - name: Setup environment (Unix)
+      if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      run: |
+        echo "_EXT=" >> $GITHUB_ENV
+
+    - name: Setup environment (Windows)
+      if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
+      run: |
+        echo "_EXT=.exe" >> $GITHUB_ENV
+
+    - name: Change permissions (Unix)
+      if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      run: |
+        chmod -R 777 ../bin/
+
+    - name: Upload for prerelease
+      if: github.ref == 'refs/heads/master'
+      uses: softprops/action-gh-release@v2.0.8
+      with:
+        tag_name: ${{ env.VERSION }}
+        token: ${{ secrets.PAT }}
+        prerelease: true
+        files: ../bin/ellsp}.${{ env._EXT }}
+
+    #### Upload an artifact for testing purposes
+
+    - name: Upload for tests
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.target }}
+        path: ../bin/ellsp
