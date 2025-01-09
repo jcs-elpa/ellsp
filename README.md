@@ -86,6 +86,10 @@ Exporting environment variables... done v
 *🔊 P.S. Nothing output afterward because the language server is waiting for the
 language client to connect!*
 
+## 🔬 Development
+
+WIP
+
 ## 🔗 References
 
 - [Language Server Protocol Specification](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/)
