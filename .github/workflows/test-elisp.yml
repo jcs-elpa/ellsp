@@ -52,3 +52,12 @@ jobs:
     - name: Run tests
       run:
         make ci
+
+    - name: Change permissions (Unix)
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      run: |
+        chmod -R 777 ./.eask
+
+    - name: Run tests
+      run:
+        make test-install
