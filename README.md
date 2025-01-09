@@ -6,6 +6,7 @@
 > Elisp Language Server
 
 [![CI Elisp](https://github.com/elisp-lsp/ellsp/actions/workflows/test-elisp.yml/badge.svg)](https://github.com/elisp-lsp/ellsp/actions/workflows/test-elisp.yml)
+[![Build Proxy](https://github.com/elisp-lsp/ellsp/actions/workflows/build-proxy.yml/badge.svg)](https://github.com/elisp-lsp/ellsp/actions/workflows/build-proxy.yml)
 
 This software is designed to be used with editors other than Emacs. If you are
 an Emacs user already, I prefer you use Emacs directly.
