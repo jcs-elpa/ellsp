@@ -49,10 +49,10 @@ Add these lines to your `Eask`-file:
 Then install the language server:
 
 ```sh
-# Install ellsp package
+# Install ellsp package.
 $ eask install-deps --dev
 
-# Install the language server
+# Install the proxy server.
 $ eask exec install-ellsp
 ```
 
@@ -75,7 +75,25 @@ language client to connect!*
 
 ## 🔬 Development
 
-WIP
+To test the language server locally:
+
+```sh
+# Package to an artifact.
+$ eask package
+
+# Install that artifact.
+$ eask install
+```
+
+Then follow the same steps as installation:
+
+```sh
+# Install the proxy server.
+$ eask exec install-ellsp
+
+# Test the language server.
+$ eask exec ellsp
+```
 
 ## 🔗 References
 
