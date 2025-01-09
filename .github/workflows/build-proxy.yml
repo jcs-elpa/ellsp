@@ -103,8 +103,7 @@ jobs:
 
     - name: Zipping dist (Windows)
       if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
-      working-directory: proxy
-      working-directory: dist
+      working-directory: proxy/dist
       run: |
         zip -r ${{ matrix.target }}.${{ env._EXT }} .
         mv ${{ matrix.target }}.${{ env._EXT }} ../
