@@ -58,22 +58,8 @@ $ eask exec install-ellsp
 
 To test to see if the server installed successfully, execute the following command:
 
-### Linux
-
 ```sh
-$ eask exec ellsp-linux
-```
-
-### macOS
-
-```sh
-$ eask exec ellsp-macos
-```
-
-### Windows
-
-```sh
-$ eask exec ellsp-win.exe
+$ eask exec ellsp
 ```
 
 If you see the following screen (no error), you successfully installed the language server! 🎉🥳
@@ -81,6 +67,7 @@ If you see the following screen (no error), you successfully installed the langu
 ```sh
 Updating environment variables... done v
 Exporting environment variables... done v
+18:45:59 [INFO ] Starting the language server...
 ```
 
 *🔊 P.S. Nothing output afterward because the language server is waiting for the

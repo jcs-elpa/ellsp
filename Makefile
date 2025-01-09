@@ -21,6 +21,9 @@ test:
 	@echo "Testing..."
 	$(EASK) test ert ./test/*.el
 
+test-install:
+	$(EASK) exec install-ellsp
+
 checkdoc:
 	@echo "Run checkdoc..."
 	$(EASK) lint checkdoc
