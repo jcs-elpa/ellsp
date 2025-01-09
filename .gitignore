@@ -18,3 +18,10 @@ dist/
 
 # personal test
 /_test
+
+# OS generated
+.DS_Store
+
+# executable
+/bin/ellsp
+/bin/ellsp.exe

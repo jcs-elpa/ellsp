@@ -1,17 +1,17 @@
 {
   "name": "ellsp-proxy",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Elisp Language Server (proxy)",
   "main": "start.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pkg-all": "pkg package.json --output ../bin/ellsp",
-    "pkg-linux-arm64": "pkg package.json -t node16-linux-arm64 --output ../bin/ellsp",
-    "pkg-linux-x64": "pkg package.json -t node16-linux-x64 --output ../bin/ellsp",
-    "pkg-macos-arm64": "pkg package.json -t node16-macos-arm64 --output ../bin/ellsp",
-    "pkg-macos-x64": "pkg package.json -t node16-macos-x64 --output ../bin/ellsp",
-    "pkg-win-arm64": "pkg package.json -t node16-win-arm64 --output ../bin/ellsp",
-    "pkg-win-x64": "pkg package.json -t node16-win-x64 --output ../bin/ellsp"
+    "pkg-linux-arm64": "pkg package.json -t node*-linux-arm64 --output ../bin/ellsp --public",
+    "pkg-linux-x64": "pkg package.json -t node*-linux-x64 --output ../bin/ellsp --public",
+    "pkg-macos-arm64": "pkg package.json -t node*-macos-arm64 --output ../bin/ellsp --public",
+    "pkg-macos-x64": "pkg package.json -t node*-macos-x64 --output ../bin/ellsp --public",
+    "pkg-win-arm64": "pkg package.json -t node*-win-arm64 --output ../bin/ellsp --public",
+    "pkg-win-x64": "pkg package.json -t node*-win-x64 --output ../bin/ellsp --public"
   },
   "bin": {
     "ellsp": "start.js"
@@ -35,6 +35,9 @@
   "dependencies": {
     "which": "^4.0.0"
   },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^6.0.0"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -43,9 +46,9 @@
       "*.js"
     ],
     "targets": [
-      "node16-linux-x64",
-      "node16-macos-x64",
-      "node16-win-x64"
+      "node*-linux-x64",
+      "node*-macos-x64",
+      "node*-win-x64"
     ],
     "outputPath": "bin"
   }
