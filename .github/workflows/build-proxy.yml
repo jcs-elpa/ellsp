@@ -78,7 +78,7 @@ jobs:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
         prerelease: true
-        files: ./bin/ellsp}${{ env._EXT }}
+        files: ./bin/ellsp
 
     #### Upload an artifact for testing purposes
 
