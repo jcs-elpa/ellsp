@@ -49,16 +49,12 @@ jobs:
         tag: v2.1.5-procursus7
 
     - name: Preparing...
+      working-directory: proxy
       run: npm install --include=dev
 
     - name: Building...
+      working-directory: proxy
       run: npm run-script pkg-${{ matrix.target }}
-
-    - name: Prepare content...
-      run: |
-        mv lisp dist
-        mv COPYING dist
-        mv README.md dist
 
     - name: Setup environment (Unix)
       if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
@@ -73,7 +69,7 @@ jobs:
     - name: Change permissions (Unix)
       if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
       run: |
-        chmod -R 777 ../bin/
+        chmod -R 777 ./bin/
 
     - name: Upload for prerelease
       if: github.ref == 'refs/heads/master'
@@ -82,7 +78,7 @@ jobs:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
         prerelease: true
-        files: ../bin/ellsp}.${{ env._EXT }}
+        files: ./bin/ellsp}${{ env._EXT }}
 
     #### Upload an artifact for testing purposes
 
@@ -90,4 +86,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.target }}
-        path: ../bin/ellsp
+        path: ./bin/ellsp
