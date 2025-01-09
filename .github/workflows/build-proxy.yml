@@ -99,7 +99,7 @@ jobs:
       working-directory: proxy
       run: |
         tar czf ${{ matrix.target }}.${{ env._EXT }} -C ./dist/ .
-        cp ${{ matrix.target }}.${{ env._EXT }} ellsp_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+        cp ${{ matrix.target }}.${{ env._EXT }} ellsp_${{ matrix.target }}.${{ env._EXT }}
 
     - name: Zipping dist (Windows)
       if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
@@ -108,7 +108,7 @@ jobs:
         zip -r ${{ matrix.target }}.${{ env._EXT }} .
         mv ${{ matrix.target }}.${{ env._EXT }} ../
         cd ..
-        cp ${{ matrix.target }}.${{ env._EXT }} ellsp_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+        cp ${{ matrix.target }}.${{ env._EXT }} ellsp_${{ matrix.target }}.${{ env._EXT }}
 
     - name: Upload for prerelease
       if: github.ref == 'refs/heads/master'
@@ -117,7 +117,7 @@ jobs:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
         prerelease: true
-        files: proxy/ellsp_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+        files: proxy/ellsp_${{ matrix.target }}.${{ env._EXT }}
 
     #### Upload an artifact for testing purposes
 
@@ -125,4 +125,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.target }}
-        path: proxy/ellsp_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
+        path: proxy/ellsp_${{ matrix.target }}.${{ env._EXT }}
