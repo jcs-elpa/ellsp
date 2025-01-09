@@ -1,4 +1,4 @@
-name: Build
+name: Build Proxy
 
 on:
   push:
@@ -20,7 +20,6 @@ concurrency:
 
 env:
   VERSION: 0.1.0
-  REPO_BIN: 'elisp-lsp/binaries'
 
 jobs:
   build:
@@ -58,6 +57,7 @@ jobs:
 
     - name: Prepare content... (Unix)
       if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      working-directory: proxy
       run: |
         mkdir dist
         mv LICENSE dist
@@ -66,6 +66,7 @@ jobs:
 
     - name: Prepare content... (Windows)
       if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
+      working-directory: proxy
       run: |
         mkdir dist
         mv LICENSE dist
@@ -89,17 +90,20 @@ jobs:
 
     - name: Change permissions (Unix)
       if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      working-directory: proxy
       run: |
         chmod -R 777 ./dist
 
     - name: Tar dist (Unix)
       if: contains(fromJSON('["linux-arm64", "linux-x64", "macos-arm64", "macos-x64"]'), matrix.target)
+      working-directory: proxy
       run: |
         tar czf ${{ matrix.target }}.${{ env._EXT }} -C ./dist/ .
         cp ${{ matrix.target }}.${{ env._EXT }} ellsp_${{ env.VERSION }}_${{ matrix.target }}.${{ env._EXT }}
 
     - name: Zipping dist (Windows)
       if: contains(fromJSON('["win-arm64", "win-x64"]'), matrix.target)
+      working-directory: proxy
       working-directory: dist
       run: |
         zip -r ${{ matrix.target }}.${{ env._EXT }} .
@@ -109,6 +113,7 @@ jobs:
 
     - name: Upload for prerelease
       if: github.ref == 'refs/heads/master'
+      working-directory: proxy
       uses: softprops/action-gh-release@v2.0.8
       with:
         tag_name: ${{ env.VERSION }}
@@ -119,6 +124,7 @@ jobs:
     #### Upload an artifact for testing purposes
 
     - name: Upload for tests
+      working-directory: proxy
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.target }}
