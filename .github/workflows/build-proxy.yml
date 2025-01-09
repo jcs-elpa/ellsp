@@ -122,7 +122,6 @@ jobs:
     #### Upload an artifact for testing purposes
 
     - name: Upload for tests
-      working-directory: proxy
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.target }}
