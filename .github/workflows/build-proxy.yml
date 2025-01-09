@@ -78,7 +78,7 @@ jobs:
         tag_name: ${{ env.VERSION }}
         token: ${{ secrets.PAT }}
         prerelease: true
-        files: ./bin/ellsp
+        files: ./bin/ellsp${{ env._EXT }}
 
     #### Upload an artifact for testing purposes
 
@@ -86,4 +86,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.target }}
-        path: ./bin/ellsp
+        path: ./bin/ellsp${{ env._EXT }}
