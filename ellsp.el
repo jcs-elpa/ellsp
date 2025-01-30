@@ -5,7 +5,7 @@
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; Maintainer: Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; URL: https://github.com/elisp-lsp/ellsp
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; Package-Requires: ((emacs "27.1") (lsp-mode "6.0.1") (log4e "0.1.0") (dash "2.14.1") (s "1.12.0") (company "0.8.12") (msgu "0.1.0"))
 ;; Keywords: convenience lsp
 
@@ -46,7 +46,7 @@
 (require 'ellsp-signature)
 (require 'ellsp-code-action)
 
-(defconst ellsp-version "0.1.0"
+(defconst ellsp-version "0.2.0"
   "The elisp langauge server version.")
 
 (defgroup ellsp nil
@@ -56,10 +56,8 @@
   :link '(url-link :tag "Repository" "https://github.com/elisp-lsp/ellsp"))
 
 (defcustom ellsp-eol (pcase system-type
-                       ;; XXX: Don't know why `\r\n' won't work with VSCode;
-                       ;; and don't know why `\n' will work. :/
-                       ;;
-                       ;; This is currently a mystry to me!
+                       ;; XXX: Don't know why `\r\n' does not work with VSCode
+                       ;; on Window; and don't know why `\n' will work...
                        (`windows-nt "\n")
                        (_           "\r\n"))
   "EOL for send messages."

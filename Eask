@@ -1,5 +1,5 @@
 (package "ellsp"
-         "0.1.0"
+         "0.2.0"
          "Elisp Language Server")
 
 (website-url "https://github.com/elisp-lsp/ellsp")

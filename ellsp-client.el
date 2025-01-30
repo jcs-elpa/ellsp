@@ -27,6 +27,7 @@
 (require 'lsp-mode)
 
 (require 'ellsp-util)
+(require 'ellsp)
 
 (defun ellsp--executable ()
   "Return the language server executable name."
