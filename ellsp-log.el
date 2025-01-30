@@ -26,6 +26,9 @@
 
 (require 'log4e)
 
+;; XXX: The enitre module is unusable on Unix-like system since they will
+;; interfere the standard ouput.
+
 (with-no-warnings
   (log4e:deflogger "ellsp" "%t [%l] %m" "%H:%M:%S" '((fatal . "fatal")
                                                      (error . "error")

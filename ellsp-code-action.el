@@ -38,7 +38,6 @@
       (forward-line line)
       (forward-char character)
       ;; TODO: ..
-      (message "%s -> %s" start end)
       )))
 
 (provide 'ellsp-code-action)

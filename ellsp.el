@@ -133,7 +133,9 @@
            ("textDocument/codeAction"    (ellsp--handle-textDocument/codeAction id params))
            ("textDocument/completion"    (ellsp--handle-textDocument/completion id params))
            ("textDocument/hover"         (ellsp--handle-textDocument/hover id params))
-           ("textDocument/signatureHelp" (ellsp--handle-textDocument/signatureHelp id params)))))
+           ("textDocument/signatureHelp" (ellsp--handle-textDocument/signatureHelp id params))
+           ;; Emacs is single threaded, skip it.
+           ("$/cancelRequest"            nil))))
     (cond ((not res)
            (message "<< %s" "no response"))
           ((when-let* ((res (ignore-errors (lsp--json-serialize res))))
