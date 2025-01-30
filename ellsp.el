@@ -189,6 +189,12 @@
                                  (error-message-string err)))))
         (setq content-length nil))))))
 
+(defun ellsp--executable ()
+  "Return the language server executable name."
+  (pcase system-type
+    ('windows-nt "ellsp.exe")
+    (_           "ellsp")))
+
 ;;;###autoload
 (defun ellsp-register ()
   "Register to start using this language server."
@@ -196,19 +202,12 @@
   (add-to-list 'lsp-language-id-configuration '(emacs-lisp-mode . "emacs-lisp"))
   (lsp-register-client
    (make-lsp-client
-    :new-connection (lsp-stdio-connection
-                     (lambda ()
-                       (cond
-                        ((locate-dominating-file (buffer-file-name) "Eask")
-                         (list "eask" "exec"
-                               (pcase system-type
-                                 ('windows-nt
-                                  "ellsp-win.exe")
-                                 ('darwin
-                                  "ellsp-macos")
-                                 ((or 'gnu 'gnu/linux 'gnu/kfreebsd)
-                                  "ellsp-linux"))))
-                        (t (error "Ellsp Language Server can only run with Eask")))))
+    :new-connection
+    (lsp-stdio-connection
+     (lambda ()
+       (cond ((locate-dominating-file (buffer-file-name) "Eask")
+              (list "eask" "exec" (ellsp--executable)))
+             (t (error "Ellsp Language Server can only run with Eask")))))
     :major-modes '(emacs-lisp-mode)
     :priority 1
     :server-id 'ellsp)))
