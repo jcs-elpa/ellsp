@@ -42,9 +42,10 @@
   "Output log file."
   (let ((log-file "./.log/ellsp.log"))
     (ignore-errors (make-directory (file-name-directory log-file) t))
-    (with-temp-buffer
-      (ellsp--log-open-log)
-      (write-region (point-min) (point-max) log-file))))
+    ;; (with-temp-buffer
+    ;;   (ellsp--log-open-log)
+    ;;   (write-region (point-min) (point-max) log-file))
+    ))
 
 (advice-add #'ellsp--fatal :after #'ellsp-output)
 (advice-add #'ellsp--error :after #'ellsp-output)
