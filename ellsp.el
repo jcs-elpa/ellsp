@@ -102,8 +102,8 @@
                                          :open-close? t
                                          :save? t
                                          :change? 1)
-                   :code-action-provider? (lsp-make-code-action-options
-                                           :resolve-provider? json-false)
+                   ;; :code-action-provider? (lsp-make-code-action-options
+                   ;;                         :resolve-provider? json-false)
                    :completion-provider? (lsp-make-completion-options
                                           :resolve-provider? json-false)
                    :signature-help-provider? (lsp-make-signature-help-options
