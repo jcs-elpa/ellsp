@@ -34,9 +34,9 @@
                                                      (debug . "debug")
                                                      (trace . "trace"))))
 
-(ellsp--log-enable-debugging)
+;;(ellsp--log-enable-debugging)
 (ellsp--log-enable-messaging)
-(ellsp--log-enable-logging)
+;;(ellsp--log-enable-logging)
 
 (defun ellsp-output (&rest _)
   "Output log file."
