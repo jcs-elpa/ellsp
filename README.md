@@ -80,11 +80,8 @@ language client to connect!*
 To test the language server locally:
 
 ```sh
-# Package to an artifact.
-$ eask package
-
-# Install that artifact.
-$ eask install
+# Add link to current package
+$ eask link add ellsp ./
 ```
 
 Then follow the same steps as installation:
