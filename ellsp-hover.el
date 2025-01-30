@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'ellsp-util)
+
 (defun ellsp--describe-string ()
   "Return the describe symbol string."
   (let ((thing (symbol-at-point)))
@@ -48,28 +50,26 @@
            params)
           (file (lsp--uri-to-path uri))
           (buffer (ellsp-get-buffer ellsp-workspace file)))
-    (when buffer
-      (with-current-buffer buffer
-        (goto-char (point-min))
-        (forward-line line)
-        (forward-char character)
-        (when-let* ((desc (ellsp--describe-at-point))
-                    (line (line-number-at-pos nil t))
-                    (column-beg (save-excursion (forward-symbol -1) (current-column)))
-                    (column-end (save-excursion (forward-symbol 1) (current-column))))
-          (lsp--make-response
-           id
-           (lsp-make-hover
-            :contents (lsp-make-markup-content
-                       :kind "plaintext"
-                       :value desc)
-            :range (lsp-make-range
-                    :start (lsp-make-position
-                            :line line
-                            :character column-beg)
-                    :end (lsp-make-position
+    (ellsp-current-buffer buffer
+      (forward-line line)
+      (forward-char character)
+      (when-let* ((desc (ellsp--describe-at-point))
+                  (line (line-number-at-pos nil t))
+                  (column-beg (save-excursion (forward-symbol -1) (current-column)))
+                  (column-end (save-excursion (forward-symbol 1) (current-column))))
+        (lsp--make-response
+         id
+         (lsp-make-hover
+          :contents (lsp-make-markup-content
+                     :kind "plaintext"
+                     :value desc)
+          :range (lsp-make-range
+                  :start (lsp-make-position
                           :line line
-                          :character column-end)))))))))
+                          :character column-beg)
+                  :end (lsp-make-position
+                        :line line
+                        :character column-end))))))))
 
 (provide 'ellsp-hover)
 ;;; ellsp-hover.el ends here

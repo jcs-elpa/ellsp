@@ -27,6 +27,8 @@
 (require 'cl-lib)
 (require 'eldoc)
 
+(require 'ellsp-util)
+
 (defvar ellsp-signature--full-string nil
   "Record current label.")
 
@@ -101,24 +103,22 @@
            params)
           (file (lsp--uri-to-path uri))
           (buffer (ellsp-get-buffer ellsp-workspace file)))
-    (when buffer
-      (with-current-buffer buffer
-        (goto-char (point-min))
-        (forward-line line)
-        (forward-char character)
-        (cond ((eldoc-print-current-symbol-info)
-               (setq ellsp-signature--full-string
-                     (with-current-buffer eldoc--doc-buffer (buffer-string)))
-               (lsp--make-response
-                id
-                (lsp-make-signature-help
-                 :active-signature? 0
-                 :signatures (apply #'vector (ellsp-signature--signature-items))
-                 :active-parameter? ellsp-signature--active-parameter)))
-              ;; XXX: Send empty signature to cancel popup window!
-              ;; But, do we really need to do this?
-              (t
-               (lsp--make-response id (lsp-make-signature-help :signatures nil))))))))
+    (ellsp-current-buffer buffer
+      (forward-line line)
+      (forward-char character)
+      (cond ((eldoc-print-current-symbol-info)
+             (setq ellsp-signature--full-string
+                   (with-current-buffer eldoc--doc-buffer (buffer-string)))
+             (lsp--make-response
+              id
+              (lsp-make-signature-help
+               :active-signature? 0
+               :signatures (apply #'vector (ellsp-signature--signature-items))
+               :active-parameter? ellsp-signature--active-parameter)))
+            ;; XXX: Send empty signature to cancel popup window!
+            ;; But, do we really need to do this?
+            (t
+             (lsp--make-response id (lsp-make-signature-help :signatures nil)))))))
 
 (provide 'ellsp-signature)
 ;;; ellsp-signature.el ends here

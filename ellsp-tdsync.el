@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'ellsp-util)
+
 (defclass ellsp-file ()
   ((name :type string :initarg :name)
    (buffer :type buffer :initarg :buffer))

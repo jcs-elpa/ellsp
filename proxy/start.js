@@ -56,8 +56,9 @@ function main() {
     return;
 
   process.stdin.on('data', function(data) {
-    //console.error(data.toString());
     let input = data.toString();
+    //console.error(input);  // XXX: It's use for debugging!
+    //proc.stdin.write(input);
     proc.stdin.write(input + '\r\n');
   });
 }

@@ -23,3 +23,8 @@ dist/
 ellsp-linux
 ellsp-macos
 ellsp-win.exe
+ellsp
+
+# local development
+/LICENSE
+/README.md

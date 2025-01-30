@@ -38,11 +38,13 @@
 (require 's)
 (require 'msgu)
 
+(require 'ellsp-util)
 (require 'ellsp-log)
 (require 'ellsp-tdsync)
 (require 'ellsp-completion)
 (require 'ellsp-hover)
 (require 'ellsp-signature)
+(require 'ellsp-code-action)
 
 (defconst ellsp-version "0.1.0"
   "The elisp langauge server version.")
@@ -53,11 +55,13 @@
   :group 'tool
   :link '(url-link :tag "Repository" "https://github.com/elisp-lsp/ellsp"))
 
-;; XXX: Don't know why \r\n won't work with VSCode; and don't
-;; know why \n will work. :/
-;;
-;; This is currently a mystry to me!
-(defcustom ellsp-eol "\n"
+(defcustom ellsp-eol (pcase system-type
+                       ;; XXX: Don't know why `\r\n' won't work with VSCode;
+                       ;; and don't know why `\n' will work. :/
+                       ;;
+                       ;; This is currently a mystry to me!
+                       (`windows-nt "\n")
+                       (_           "\r\n"))
   "EOL for send messages."
   :type 'string
   :group 'ellsp)
@@ -73,16 +77,13 @@
   :type 'hook
   :group 'ellsp)
 
-(defun ellsp-2str (obj)
-  "Convert OBJ to string."
-  (format "%s" obj))
-
 (defun ellsp-send-response (msg)
   "Send response MSG."
   (when (or (hash-table-p msg)
             (and (listp msg) (plist-get msg :jsonrpc)))
     (setq msg (lsp--json-serialize msg)))
-  (setq msg (format "Content-Length: %d%s%s%s" (string-bytes msg)
+  (setq msg (concat "Content-Length: "
+                    (ellsp-2str (string-bytes msg))
                     ellsp-eol ellsp-eol
                     msg))
   (princ msg)
@@ -103,6 +104,8 @@
                                          :open-close? t
                                          :save? t
                                          :change? 1)
+                   :code-action-provider? (lsp-make-code-action-options
+                                           :resolve-provider? json-false)
                    :completion-provider? (lsp-make-completion-options
                                           :resolve-provider? json-false)
                    :signature-help-provider? (lsp-make-signature-help-options
@@ -129,6 +132,7 @@
            ("textDocument/didOpen"       (ellsp--handle-textDocument/didOpen params))
            ("textDocument/didSave"       (ellsp--handle-textDocument/didSave params))
            ("textDocument/didChange"     (ellsp--handle-textDocument/didChange params))
+           ("textDocument/codeAction"    (ellsp--handle-textDocument/codeAction id params))
            ("textDocument/completion"    (ellsp--handle-textDocument/completion id params))
            ("textDocument/hover"         (ellsp--handle-textDocument/hover id params))
            ("textDocument/signatureHelp" (ellsp--handle-textDocument/signatureHelp id params)))))
@@ -146,11 +150,6 @@
 (defun ellsp--get-content-length (input)
   "Return the content length from INPUT."
   (string-to-number (nth 1 (split-string input ": "))))
-
-(defun ellsp--check-content-type (input length)
-  "Return non-nil when INPUT match content's LENGTH."
-  (and length
-       (= (length input) length)))
 
 (defvar ellsp-next-input nil)
 
@@ -192,7 +191,7 @@
 (defun ellsp--executable ()
   "Return the language server executable name."
   (pcase system-type
-    ('windows-nt "ellsp.exe")
+    (`windows-nt "ellsp.exe")
     (_           "ellsp")))
 
 ;;;###autoload

@@ -28,7 +28,7 @@
 (require 'company-capf)
 (require 'lsp-completion)
 
-(declare-function ellsp-2str "ellsp.el")
+(require 'ellsp-util)
 
 (defun ellsp--convert-kind (kind)
   "Convert company's KIND to lsp-mode's kind."
@@ -61,16 +61,14 @@
            params)
           (file (lsp--uri-to-path uri))
           (buffer (ellsp-get-buffer ellsp-workspace file)))
-    (when buffer
-      (with-current-buffer buffer
-        (goto-char (point-min))
-        (forward-line line)
-        (forward-char character)
-        (lsp--make-response
-         id
-         (lsp-make-completion-list
-          :is-incomplete json-false
-          :items (apply #'vector (ellsp--capf-completions))))))))
+    (ellsp-current-buffer buffer
+      (forward-line line)
+      (forward-char character)
+      (lsp--make-response
+       id
+       (lsp-make-completion-list
+        :is-incomplete json-false
+        :items (apply #'vector (ellsp--capf-completions)))))))
 
 (provide 'ellsp-completion)
 ;;; ellsp-completion.el ends here
