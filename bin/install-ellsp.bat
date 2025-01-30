@@ -20,7 +20,16 @@
 :: TODO(everyone): Keep this script simple and easily auditable.
 ::
 
-set URL=https://github.com/elisp-lsp/ellsp/releases/latest/download/ellsp_win-x64.zip
+if "%PROCESSOR_ARCHITECTURE%" == "AMD64" (
+    set ARCH=x64
+) else if "%PROCESSOR_ARCHITECTURE%" == "ARM64" (
+    set ARCH=arm64
+) else (
+    echo Error: Unsupported architecture detected: `%PROCESSOR_ARCHITECTURE%`.
+    exit /b 1
+)
+
+set URL=https://github.com/elisp-lsp/ellsp/releases/latest/download/ellsp_win-%ARCH%.zip
 set ELLSP_BIN_DIR=%~dp0
 set ZIP=%ELLSP_BIN_DIR%\ellsp.zip
 
