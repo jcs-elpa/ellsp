@@ -34,8 +34,8 @@
 
 (defun ellsp--describe-at-point ()
   "Describe symbol at point."
-  (when-let (((derived-mode-p 'lisp-data-mode))
-             (desc (ellsp--describe-string)))
+  (when-let* (((derived-mode-p 'lisp-data-mode))
+              (desc (ellsp--describe-string)))
     (if (or (string-empty-p desc)
             (string= (string-trim desc) "[back]"))
         nil
@@ -53,10 +53,10 @@
         (goto-char (point-min))
         (forward-line line)
         (forward-char character)
-        (when-let ((desc (ellsp--describe-at-point))
-                   (line (line-number-at-pos nil t))
-                   (column-beg (save-excursion (forward-symbol -1) (current-column)))
-                   (column-end (save-excursion (forward-symbol 1) (current-column))))
+        (when-let* ((desc (ellsp--describe-at-point))
+                    (line (line-number-at-pos nil t))
+                    (column-beg (save-excursion (forward-symbol -1) (current-column)))
+                    (column-end (save-excursion (forward-symbol 1) (current-column))))
           (lsp--make-response
            id
            (lsp-make-hover

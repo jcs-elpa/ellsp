@@ -44,6 +44,9 @@
 (require 'ellsp-hover)
 (require 'ellsp-signature)
 
+(defconst ellsp-version "0.1.0"
+  "The elisp langauge server version.")
+
 (defgroup ellsp nil
   "Elisp Language Server."
   :prefix "ellsp-"
@@ -93,7 +96,7 @@
    (lsp-make-initialize-result
     :server-info (lsp-make-server-info
                   :name "ellsp"
-                  :version? "0.1.0")
+                  :version? ellsp-version)
     :capabilities (lsp-make-server-capabilities
                    :hover-provider? t
                    :text-document-sync? (lsp-make-text-document-sync-options
@@ -131,10 +134,10 @@
            ("textDocument/signatureHelp" (ellsp--handle-textDocument/signatureHelp id params)))))
     (cond ((not res)
            (message "<< %s" "no response"))
-          ((when-let ((res (ignore-errors (lsp--json-serialize res))))
+          ((when-let* ((res (ignore-errors (lsp--json-serialize res))))
              (message "<< %s" res)
              (ellsp-send-response res)))
-          ((when-let ((res (ignore-errors (json-encode res))))
+          ((when-let* ((res (ignore-errors (json-encode res))))
              (message "<< %s" res)
              (ellsp-send-response res)))
           (t

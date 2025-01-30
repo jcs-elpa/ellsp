@@ -49,13 +49,13 @@ be re-analysed during textDocument/didOpen handler.")))
 
 (cl-defmethod ellsp-get-buffer ((state ellsp-state) (file string))
   "Get the buffer from workspace state."
-  (when-let ((file (ellsp-get-file state file)))
+  (when-let* ((file (ellsp-get-file state file)))
     (oref file buffer)))
 
 (cl-defmethod ellsp-update-file-buffer ((state ellsp-state) (file string) &optional content)
   "Sync the text document buffer."
   (message "Trying to update file %s" file)
-  (when-let ((buffer (ellsp-get-buffer state file)))
+  (when-let* ((buffer (ellsp-get-buffer state file)))
     (with-current-buffer buffer
       (erase-buffer)
       (if (and content (stringp content))
