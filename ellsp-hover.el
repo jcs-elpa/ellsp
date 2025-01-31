@@ -55,6 +55,7 @@
       (forward-char character)
       (when-let* ((desc (ellsp--describe-at-point))
                   (line (line-number-at-pos nil t))
+                  (line (1- line))  ; zero-based
                   (column-beg (save-excursion (forward-symbol -1) (current-column)))
                   (column-end (save-excursion (forward-symbol 1) (current-column))))
         (lsp--make-response
