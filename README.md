@@ -39,6 +39,11 @@ Before installation, make sure you have all the following software installed!
 
 ## 💾 Installation
 
+> [!IMPORTANT]
+>
+> Ellsp can only be used with projects that utilize Eask as their package manager.
+> Ensure your project is properly set up with Eask before using Ellsp.
+
 Add these lines to your `Eask`-file:
 
 ```elisp
