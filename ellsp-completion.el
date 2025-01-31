@@ -36,6 +36,11 @@
   (or (cl-position (capitalize kind) lsp-completion--item-kind :test #'equal)
       lsp/completion-item-kind-text))
 
+;; TODO: The implementation here with `company' is deprecated, we need to
+;; either do:
+;;
+;;   - Upgrade to use the newest `company'
+;;   - Stop relying on `company'
 (defun ellsp--capf-completions ()
   "Fallback completions engine is the `elisp-completion-at-point'."
   (let* ((prefix (company-capf 'prefix))

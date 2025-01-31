@@ -15,6 +15,10 @@
 (source 'melpa)
 (source 'jcs-elpa)
 
+(source-priority 'gnu      0)
+(source-priority 'melpa    5)
+(source-priority 'jcs-elpa 10)  ; XXX: rely on my own `company'
+
 (depends-on "emacs" "27.1")
 (depends-on "lsp-mode")
 (depends-on "company")
